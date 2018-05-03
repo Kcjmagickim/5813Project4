@@ -1,3 +1,10 @@
+/**********************************
+@file: logger_queue.h
+@brief: Implementation of the non blocking logger
+@author: John Kim
+@date: Apr 28th, 2018
+***********************************/
+
 #include "logger_queue.h"
 #include <stdint.h>
 #include "uart.h"

@@ -20,7 +20,7 @@ void GPIO_Configure();
 /***************************************************************
 @brief: sets GPIO pin configuration including RGB LED and its
 		respective port control settings.
-@no param and return:
+@ modified to support RTC
 ****************************************************************/
 
 void Toggle_Red_LED();

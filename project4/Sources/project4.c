@@ -1,3 +1,9 @@
+/**********************************
+@file: project4.c
+@brief: main function to get called
+@author: John Kim
+@date: Apr 29th, 2018
+***********************************/
 #include "logger.h"
 #include "uart.h"
 #include <stddef.h>

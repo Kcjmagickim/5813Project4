@@ -1,3 +1,10 @@
+/**********************************
+@file: logger_queue.c
+@brief: Implementation of the partial logging and blocking logger
+@author: John Kim
+@date: Apr 28th, 2018
+***********************************/
+
 #include <stdint.h>
 #include "uart.h"
 #include "logger.h"

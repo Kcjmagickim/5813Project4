@@ -1,3 +1,10 @@
+/**********************************
+@file: dma.c
+@brief: Provdies control over DMA
+@author: John Kim
+@date: Apr 17th, 2018 (??)
+***********************************/
+
 #include <stdint.h>
 #include <stddef.h>
 #include "dma.h"

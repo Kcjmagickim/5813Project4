@@ -1,3 +1,9 @@
+/**********************************
+@file: rtc.h
+@brief: Initialzes RTC module
+@author: John Kim
+@date: Apr 28th, 2018
+***********************************/
 #include "rtc.h"
 #include "MKL25Z4.h"
 

@@ -3,7 +3,6 @@
 #include "dma.h"
 #include "systick.h"
 #include <MKL25Z4.h>
-#include "port.h"
 
 uint8_t quart;
 

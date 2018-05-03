@@ -22,7 +22,6 @@ void GPIO_Configure(){
 	GPIOD_PDDR |= 1<<RGB_BLUE_PIN;
 	GPIOD_PSOR |= 1<<RGB_BLUE_PIN;
 
-
 	MCG_C1 |= MCG_C1_IRCLKEN_MASK;
 
 	MCG_C2 &= ~(MCG_C2_IRCS_MASK);
@@ -33,7 +32,7 @@ void GPIO_Configure(){
 
     PORTC_PCR3 |= (PORT_PCR_MUX(0x5));
 
-    logging(GPIO_INITIALIZED, 8, (uint32_t) RTC_TSR, 23, "NA", 1);
+    logging(GPIO_INITIALIZED, 18, (uint32_t) RTC_TSR, 23, "NA", 1);
 }
 
 void Toggle_Red_LED(){
@@ -80,5 +79,5 @@ void GPIO_nrf_init(){
 	PORTC_PCR7 = PORT_PCR_MUX(2);  // MISO
 	PORTB_PCR1 = PORT_PCR_MUX(1);  // CE
 	PORTB_PCR2 = PORT_PCR_MUX(1);  // CSN
-	GPIOB_PDDR |= ((1 << CE) + (1 << CSN));
+	GPIOB_PDDR |= ((1 << 1) + (1 << 2));
 }

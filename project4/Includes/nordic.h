@@ -10,7 +10,11 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "core_cmFunc.h"
-#include "port.h"
+
+
+#define CE				  1
+#define CSN 			  2
+
 
 #define CONFIG_REG 0x00
 #define MASK_RX_DR_bit 0x40

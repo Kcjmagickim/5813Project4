@@ -81,6 +81,9 @@ void log_item(LogItem_t * log){
 	UART_send(space);
 	log_integer(log->checksum);
 	UART_send(space);
+	if((log->ID == GPIO_INITIALIZED) || (log->ID == LOGGER_INITIALIZED)){
+		UART_send("1");UART_send("0");
+	}
 	log_integer(log->timestamp);
 	UART_send(newline);
 }
@@ -142,17 +145,17 @@ void logging3(LogID_e id, uint32_t modID, uint32_t TS, uint32_t LL, char * pc, c
 	UART_send(space);
 	log_integer(LL);
 	UART_send(space);
-//	log_string("Current PC is:");
-//	UART_send(space);
+	log_string("Current PC is:");
+	UART_send(space);
 	log_string(pc);
 	UART_send(space);
-//	log_string("Current Stack Pointer is:");
-//	UART_send(space);
+	log_string("Current Stack Pointer is:");
+	UART_send(space);
 	log_string(sp);
 	UART_send(space);
-	log_integer(TS);
-	UART_send(space);
 	log_integer(cs);
+	UART_send(space);
+	log_integer(TS);
 	UART_send(newline);
 	log_flush();
 }

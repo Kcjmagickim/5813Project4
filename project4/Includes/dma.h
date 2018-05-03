@@ -1,7 +1,6 @@
 #ifndef DMA_H_
 #define DMA_H_
 
-#include <MKL25Z4.h>
 #include <stdint.h>
 #include <stddef.h>
 

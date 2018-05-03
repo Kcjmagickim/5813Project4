@@ -5,15 +5,13 @@
 @date: Feb 17th, 2018
 ***********************************/
 
-#include "MKL25Z4.h"
 #ifndef PORT_H
 #define PORT_H
 
 #define RGB_RED_PIN       18
 #define RGB_GREEN_PIN     19
 #define RGB_BLUE_PIN      1
-#define CE				  1
-#define CSN 			  2
+
 #define SCLK			  5
 #define MOSI			  6
 #define MISO			  7

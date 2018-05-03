@@ -13,7 +13,7 @@
 int quart;
 char data[100] = "";
 
-uint8_t heartbeat;
+uint8_t heartbeat, gpio, rtc;
 uint32_t alph1 = 0;
 uint32_t numb1 = 0;
 uint32_t punc1 = 0;
@@ -38,19 +38,24 @@ uint32_t minutes = 0;
 uint8_t interrupt = 0;
 
 void project4(){
-	rtc_init();
+	rtc_init(); rtc=1;
 	UART_configure(9600);
-	GPIO_Configure();
+	GPIO_Configure(); gpio=1;
 
 	SYST_RVR = SysTick_RVR_RELOAD(20971520/4);
 	SYST_CVR = SysTick_CVR_CURRENT(0);
 	SYST_CSR |= SysTick_CSR_ENABLE_MASK | SysTick_CSR_CLKSOURCE_MASK;
 
-	logging(SYSTEM_INITIALIZED, 13, (uint32_t) RTC_TSR, 23, "NA", 1);
+	if(!rtc){
+		logging(ERROR, 11, 0, 23, "RTC not Initialized", 1);
+	}
 
-	logging(SYSTEM_ID, 13, (uint32_t) RTC_TSR, 37, "Code by John Kim", 1);
-	logging(SYSTEM_VERSION, 13, (uint32_t) RTC_TSR, 44, "Running on kl25z128vlk4", 1);
-	logging(PROFILING_STARTED , 13, (uint32_t) RTC_TSR, 43, "Starting runtime timer", 1);
+	logging(SYSTEM_INITIALIZED, 13, (uint32_t) RTC_TSR + (minutes +1)*100, 23, "NA", 1);
+
+	logging(SYSTEM_ID, 13, (uint32_t) RTC_TSR + (minutes +1)*100, 37, "Code by John Kim", 1);
+	logging(SYSTEM_VERSION, 13, (uint32_t) RTC_TSR + (minutes +1)*100, 44, "Running on kl25z128vlk4", 1);
+	logging(INFO, 12, (uint32_t) RTC_TSR + (minutes +1)*100, 23, "Logger Flushed", 1);
+	logging(PROFILING_STARTED , 13, (uint32_t) RTC_TSR + (minutes +1)*100, 43, "Starting runtime timer", 1);
 
 	tick1 = SYST_CVR&SysTick_CVR_CURRENT_MASK;
     uint8_t stat = 0;
@@ -84,9 +89,9 @@ void project4(){
 	}
 	data[index] = '\0';
 
-	logging(DATA_RECEIVED, 13, (uint32_t) RTC_TSR, 20 + index, data, 1);
+	logging(DATA_RECEIVED, 13, (uint32_t) RTC_TSR + (minutes +1)*100, 20 + index, data, 1);
 
-	logging(DATA_ANALYSIS_STARTED, 13, (uint32_t) RTC_TSR, 23, "NA", 1);
+	logging(DATA_ANALYSIS_STARTED, 13, (uint32_t) RTC_TSR + (minutes +1)*100, 23, "NA", 1);
 
 	SYST_CSR |= SysTick_CSR_ENABLE_MASK | SysTick_CSR_TICKINT_MASK | SysTick_CSR_CLKSOURCE_MASK;
 
@@ -99,26 +104,28 @@ void project4(){
 
 	tick2 = SYST_CVR&SysTick_CVR_CURRENT_MASK;
 
-	logging(DATA_ANALYSIS_COMPLETED, 13, (uint32_t) RTC_TSR, 23, "NA", 1);
+	logging(DATA_ANALYSIS_COMPLETED, 13, (uint32_t) RTC_TSR + (minutes +1)*100, 23, "NA", 1);
 
 	tick = tick1-tick2;
 	my_itoa(tick + 20971520/4*quart, number22, 10);
-	logging2(PROFILING_RESULT , 13, (uint32_t) RTC_TSR, 43, number22, 1);
+	logging2(PROFILING_RESULT , 13, (uint32_t) RTC_TSR + (minutes +1)*100, 43, number22, 1);
 
 	sp = __get_MSP();
 	pcr = *(pc);
 	my_itoa(sp, number23, 10);
 	my_itoa(pcr, number24, 10);
 
-	logging(PROFILING_COMPLETED , 13, (uint32_t) RTC_TSR, 23, "NA", 1);
+	logging(PROFILING_COMPLETED , 13, (uint32_t) RTC_TSR + (minutes +1)*100, 23, "NA", 1);
 
-	logging3(CORE_DUMP , 13, (uint32_t) RTC_TSR, 23, number23, number24, 1);
+	logging3(CORE_DUMP , 13, (uint32_t) RTC_TSR + (minutes +1)*100, 23, number23, number24, 1);
 
-	logging(SYSTEM_HALTED, 13, (uint32_t) RTC_TSR, 23, "NA", 1);
+	logging(SYSTEM_HALTED, 13, (uint32_t) RTC_TSR + (minutes +1)*100, 23, "NA", 1);
+
+	logging(INFO, 12, (uint32_t) RTC_TSR + (minutes +1)*100, 23, "Logger Flushed", 1);
 
 	while(1){
 		if (interrupt==1){
-			logging(HEARTBEAT, 13, (uint32_t) RTC_TSR, 23, "NA", 1);
+			logging(HEARTBEAT, 11, (uint32_t) RTC_TSR + (minutes +1)*100, 23, "NA", 1);
 			interrupt=0;
 		}
 	}
@@ -130,16 +137,16 @@ void DUMP_STAT2(){
 	uint8_t digits;
 
 	digits=my_itoa(alph1, number11, 10);
-	logging(DATA_ALPHA_COUNT, 13, (uint32_t) RTC_TSR, 20 + digits, number11, 1);
+	logging(DATA_ALPHA_COUNT, 13, (uint32_t) RTC_TSR + (minutes +1)*100, 20 + digits, number11, 1);
 
 	digits=my_itoa(punc1, number21, 10);
-	logging(DATA_PUNCTUATION_COUNT, 13, (uint32_t) RTC_TSR, 20 + digits, number21, 1);
+	logging(DATA_PUNCTUATION_COUNT, 13, (uint32_t) RTC_TSR + (minutes +1)*100, 20 + digits, number21, 1);
 
 	digits=my_itoa(numb1, number31, 10);
-	logging(DATA_NUMERIC_COUNT, 13, (uint32_t) RTC_TSR, 20 + digits, number31, 1);
+	logging(DATA_NUMERIC_COUNT, 13, (uint32_t) RTC_TSR + (minutes +1)*100, 20 + digits, number31, 1);
 
 	digits=my_itoa(misc1, number41, 10);
-	logging(DATA_MISC_COUNT, 13, (uint32_t) RTC_TSR, 20 + digits, number41, 1);
+	logging(DATA_MISC_COUNT, 13, (uint32_t) RTC_TSR + (minutes +1)*100, 20 + digits, number41, 1);
 
 	return;
 }
@@ -165,8 +172,12 @@ void SysTick_Handler(){
 
 void RTC_Seconds_IRQHandler(void)
 {
-	interrupt = 1;
-	RGB_BLUE_TOGGLE();
+	if(!gpio){
+		logging(WARNING, 18, (uint32_t) RTC_TSR + (minutes +1)*100, 23, "GPIO not Initialized", 1);
+	}else{
+		interrupt = 1;
+		RGB_BLUE_TOGGLE();
+	}
 
 	seconds = (uint32_t) RTC_TSR;
     if (seconds >59){

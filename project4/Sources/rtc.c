@@ -1,6 +1,5 @@
 #include "rtc.h"
 #include "MKL25Z4.h"
-#include "port.h"
 
 void rtc_init()
 {

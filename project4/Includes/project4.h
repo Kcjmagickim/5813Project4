@@ -9,7 +9,6 @@
 
 #include "logger.h"
 
-
 void DUMP_STAT2();
 
 void project4();
